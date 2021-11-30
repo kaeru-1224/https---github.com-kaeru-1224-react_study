@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 function TodoItem({ content, completed }) {
   return (
@@ -14,6 +14,11 @@ function TodoItem({ content, completed }) {
 }
 
 function Main() {
+  const [todoList, setTodoList] = useState([
+    { content: "춤 추기", completed: true },
+    { content: "리액트 공부", completed: false },
+  ]);
+
   return (
     <section className="main">
       <input
@@ -24,8 +29,9 @@ function Main() {
       />
       <label htmlFor="toggle-all"></label>
       <ul className="todo-list">
-        <TodoItem content="춤 추기" completed={true} />
-        <TodoItem content="리액트 공부" completed={false} />
+        {todoList.map((todo) => (
+          <TodoItem {...todo} />
+        ))}
       </ul>
     </section>
   );
