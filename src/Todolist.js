@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 
-function TodoItem({ id, content, completed, deleteTodo }) {
+function TodoItem({ id, content, completed, deleteTodo, completeTodo }) {
   function handleDelete(e) {
     deleteTodo(id);
+  }
+  function handleComplete(e) {
+    completeTodo(id);
   }
 
   return (
     <li className={completed ? "completed" : null}>
       <div className="view">
-        <input className="toggle" type="checkbox" checked={completed} />
+        <input
+          className="toggle"
+          type="checkbox"
+          checked={completed}
+          onClick={handleComplete}
+        />
         <label>{content}</label>
         <button onClick={handleDelete} className="destroy"></button>
       </div>
@@ -17,7 +25,7 @@ function TodoItem({ id, content, completed, deleteTodo }) {
   );
 }
 
-function Main({ todoList, deleteTodo }) {
+function Main({ todoList, deleteTodo, completeTodo }) {
   return (
     <section className="main">
       <input
@@ -29,7 +37,11 @@ function Main({ todoList, deleteTodo }) {
       <label htmlFor="toggle-all"></label>
       <ul className="todo-list">
         {todoList.map((todo) => (
-          <TodoItem {...todo} deleteTodo={deleteTodo} />
+          <TodoItem
+            {...todo}
+            deleteTodo={deleteTodo}
+            completeTodo={completeTodo}
+          />
         ))}
       </ul>
     </section>

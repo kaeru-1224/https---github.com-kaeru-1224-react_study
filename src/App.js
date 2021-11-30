@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Main from "./Todolist";
 import Todocheck from "./Todocheck";
+import { produce } from "immer";
 import "./App.css";
 
 function App() {
@@ -25,11 +26,24 @@ function App() {
     setTodoList((old) => old.filter((todo) => todo.id !== targetId));
   }
 
+  function completeTodo(targetId) {
+    setTodoList(
+      produce((old) => {
+        const target = old.find((todo) => todo.id === targetId);
+        target.completed = !target.completed;
+      })
+    );
+  }
+
   return (
     <section className="todoapp">
       <div>
         <Header addTodo={addTodo} />
-        <Main todoList={todoList} deleteTodo={deleteTodo} />
+        <Main
+          todoList={todoList}
+          deleteTodo={deleteTodo}
+          completeTodo={completeTodo}
+        />
         <Todocheck />
       </div>
     </section>
