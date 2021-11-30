@@ -1,4 +1,18 @@
 import React from "react";
+
+function TodoItem({ content, completed }) {
+  return (
+    <li className={completed ? "completed" : null}>
+      <div className="view">
+        <input className="toggle" type="checkbox" checked={completed} />
+        <label>{content}</label>
+        <button className="destroy"></button>
+      </div>
+      <input className="edit" value={content} />
+    </li>
+  );
+}
+
 function Main() {
   return (
     <section className="main">
@@ -10,14 +24,8 @@ function Main() {
       />
       <label htmlFor="toggle-all"></label>
       <ul className="todo-list">
-        <li className="completed">
-          <div className="view">
-            <input className="toggle" type="checkbox" checked={false} />
-            <label>투두 리스트</label>
-            <button className="destroy"></button>
-          </div>
-          <input className="edit" value="투두 리스트" />
-        </li>
+        <TodoItem content="춤 추기" completed={true} />
+        <TodoItem content="리액트 공부" completed={false} />
       </ul>
     </section>
   );
