@@ -35,6 +35,8 @@ function App() {
     );
   }
 
+  const count = todoList.filter((todo) => todo.completed === false).length;
+
   return (
     <section className="todoapp">
       <div>
@@ -44,7 +46,7 @@ function App() {
           deleteTodo={deleteTodo}
           completeTodo={completeTodo}
         />
-        <Todocheck />
+        <Todocheck count={count} />
       </div>
     </section>
   );
