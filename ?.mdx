@@ -1,0 +1,30 @@
+```
+  function clearCompleted() {
+    setTodoList(
+      produce((old) => {
+        const target = old.find((todo) => todo.completed === true);
+        deleteTodo(target.id);
+      })
+    );
+  }
+```
+
+이대로해서 실행한것만 삭제가 되는데 모두 삭제되는게 아니라, 일부 삭제만됨 왜지?
+'''
+function clearCompleted() {
+setTodoList(
+produce((old) => {
+const target = old.filter((todo) => todo.completed === true);
+target.map((todo) => deleteTodo(todo.id));
+})
+);
+}
+
+'''
+find로 하니까 일부만 나와서 그런거였고 필터로 다시 타겟 구해줘서 진행해주니 무사히 해결되었음!
+
+?수정한다는게 결국 투두 리스트를 추가한다는건데, 그러면 그거 값을 어떻게 수정을 해준ㄷ가는거지??
+처음에 생각한건 타겟아이디 일치하는 거를 찾아서 -> 맞으면 콘텐츠를 수정해준다인데
+의문이 그러면 어디의 컨텐츠를 수정해주어야한다는거야??? 컨텐츠가 라벨하고 인풋하고 둘다 잇는데 ???
+
+-> 아니면 클래스 변경을해야할가,,(인풋 할수잇도록 만들어주어야하닉아??) 그러면 클릭시에 변

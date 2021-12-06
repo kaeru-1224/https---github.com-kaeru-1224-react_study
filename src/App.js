@@ -7,8 +7,18 @@ import "./App.css";
 
 function App() {
   const initialState = [
-    { id: crypto.randomUUID(), content: "춤 추기", completed: true },
-    { id: crypto.randomUUID(), content: "리액트 공부", completed: false },
+    {
+      id: crypto.randomUUID(),
+      content: "춤 추기",
+      completed: true,
+      active: true,
+    },
+    {
+      id: crypto.randomUUID(),
+      content: "리액트 공부",
+      completed: false,
+      active: false,
+    },
   ];
 
   const [todoList, setTodoList] = useState(initialState);
@@ -31,7 +41,27 @@ function App() {
     setTodoList(
       produce((old) => {
         const target = old.find((todo) => todo.id === targetId);
+
         target.completed = !target.completed;
+      })
+    );
+  }
+
+  function clearCompleted() {
+    setTodoList(
+      produce((old) => {
+        const target = old.filter((todo) => todo.completed === true);
+        target.map((todo) => deleteTodo(todo.id));
+      })
+    );
+  }
+  //수정
+  //타겟아이디로 수정할 사항 확인하고-> 맞으면 수정하도록 진행(?그런데 수정하려면 라벨을 어케 만들어줘야함?)
+  function changeTodo(targetId, newContent) {
+    setTodoList(
+      produce((old) => {
+        const target = old.find((todo) => todo.id === targetId);
+        target.content = newContent;
       })
     );
   }
@@ -46,8 +76,9 @@ function App() {
           todoList={todoList}
           deleteTodo={deleteTodo}
           completeTodo={completeTodo}
+          changeTodo={changeTodo}
         />
-        <Todocheck count={count} />
+        <Todocheck count={count} clearCompleted={clearCompleted} />
       </div>
     </section>
   );

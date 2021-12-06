@@ -1,6 +1,9 @@
 import React from "react";
 
-function Todocheck({ count }) {
+function Todocheck({ count, clearCompleted }) {
+  function handleComplete(e) {
+    clearCompleted();
+  }
   return (
     <footer className="footer">
       <span className="todo-count">
@@ -31,7 +34,9 @@ function Todocheck({ count }) {
           </a>
         </li>
       </ul>
-      <button className="clear-completed">Clear completed</button>
+      <button onClick={handleComplete} className="clear-completed">
+        Clear completed
+      </button>
     </footer>
   );
 }
