@@ -7,7 +7,7 @@ function Todocheck({ count }) {
         {count === 0 ? null : (
           <>
             <strong>{count}</strong>
-            <span> {count === 1 ? "item" : "items"} </span>
+            <span> {count === 1 ? "item" : "items"}</span>
             <span> left</span>
           </>
         )}

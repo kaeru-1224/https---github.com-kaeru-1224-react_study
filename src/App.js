@@ -19,6 +19,7 @@ function App() {
       content: content,
       completed: false,
     };
+
     setTodoList((old) => [...old, newTodo]);
   }
 
