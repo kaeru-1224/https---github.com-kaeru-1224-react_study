@@ -4,6 +4,7 @@ import Main from "./Todolist";
 import Todocheck from "./Todocheck";
 import { produce } from "immer";
 import "./App.css";
+import { loadPartialConfig } from "@babel/core";
 
 function App() {
   const initialState = [
@@ -11,18 +12,15 @@ function App() {
       id: crypto.randomUUID(),
       content: "춤 추기",
       completed: true,
-      active: true,
     },
     {
       id: crypto.randomUUID(),
       content: "리액트 공부",
       completed: false,
-      active: false,
     },
   ];
 
   const [todoList, setTodoList] = useState(initialState);
-
   function addTodo(content) {
     const newTodo = {
       id: crypto.randomUUID(),
@@ -56,7 +54,7 @@ function App() {
     );
   }
   //수정
-  //타겟아이디로 수정할 사항 확인하고-> 맞으면 수정하도록 진행(?그런데 수정하려면 라벨을 어케 만들어줘야함?)
+
   function changeTodo(targetId, newContent) {
     setTodoList(
       produce((old) => {
@@ -65,20 +63,39 @@ function App() {
       })
     );
   }
-
+  //남은 개수 확인
   const count = todoList.filter((todo) => todo.completed === false).length;
+  //전체-완료- 미완료 필터링
+  //기본 디폴트값 만들어주기
+
+  const [filter, setFilter] = useState("all");
+  function getFiltered(filter) {
+    if (filter === "active") {
+      return todoList.filter((todo) => !todo.completed);
+    } else if (filter === "completed") {
+      return todoList.filter((todo) => todo.completed);
+    }
+    return todoList;
+  }
+  //변경된 투두 리스트를 메인에 보내주기위한 용도
+  const filteredTodoList = getFiltered(filter);
 
   return (
     <section className="todoapp">
       <div>
         <Header addTodo={addTodo} />
         <Main
-          todoList={todoList}
+          todoList={(todoList, filteredTodoList)}
           deleteTodo={deleteTodo}
           completeTodo={completeTodo}
           changeTodo={changeTodo}
         />
-        <Todocheck count={count} clearCompleted={clearCompleted} />
+        <Todocheck
+          count={count}
+          clearCompleted={clearCompleted}
+          filter={filter}
+          setFilter={setFilter}
+        />
       </div>
     </section>
   );
