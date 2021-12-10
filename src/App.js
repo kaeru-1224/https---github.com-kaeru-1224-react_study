@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Todolist";
 import Todocheck from "./Todocheck";
@@ -7,20 +7,19 @@ import "./App.css";
 import { loadPartialConfig } from "@babel/core";
 
 function App() {
-  const initialState = [
-    {
-      id: crypto.randomUUID(),
-      content: "춤 추기",
-      completed: true,
-    },
-    {
-      id: crypto.randomUUID(),
-      content: "리액트 공부",
-      completed: false,
-    },
-  ];
-
+  const initialState = [];
   const [todoList, setTodoList] = useState(initialState);
+  // 로컬 스토리지에 저장
+  useEffect(() => {
+    localStorage.setItem("To-Do", JSON.stringify(todoList));
+  }, [todoList]);
+  useEffect(() => {
+    const getTodo = localStorage.getItem("To-do");
+    if (JSON.parse(getTodo)) {
+      setTodoList(JSON.parse(getTodo));
+    }
+  }, []);
+
   function addTodo(content) {
     const newTodo = {
       id: crypto.randomUUID(),
