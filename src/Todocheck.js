@@ -1,6 +1,9 @@
 import React from "react";
+import useTodoListAtom from "./state";
 
-function Todocheck({ count, clearCompleted, filter, setFilter }) {
+function Todocheck({ count, filter, setFilter }) {
+  const { clearCompleted } = useTodoListAtom();
+
   function handleComplete(e) {
     clearCompleted();
   }

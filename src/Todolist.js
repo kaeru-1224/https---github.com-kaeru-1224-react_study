@@ -1,13 +1,9 @@
 import React, { useState } from "react";
+import useTodoListAtom from "./state";
 
-function TodoItem({
-  id,
-  content,
-  completed,
-  deleteTodo,
-  completeTodo,
-  changeTodo,
-}) {
+function TodoItem({ id, content, completed }) {
+  const { deleteTodo, completeTodo, changeTodo } = useTodoListAtom();
+
   function handleDelete(e) {
     deleteTodo(id);
   }
@@ -65,7 +61,7 @@ function TodoItem({
   );
 }
 
-function Main({ todoList, deleteTodo, completeTodo, changeTodo }) {
+function Main({ todoList }) {
   return (
     <section className="main">
       <input
@@ -77,13 +73,7 @@ function Main({ todoList, deleteTodo, completeTodo, changeTodo }) {
       <label htmlFor="toggle-all"></label>
       <ul className="todo-list">
         {todoList.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            {...todo}
-            deleteTodo={deleteTodo}
-            completeTodo={completeTodo}
-            changeTodo={changeTodo}
-          />
+          <TodoItem key={todo.id} {...todo} />
         ))}
       </ul>
     </section>
