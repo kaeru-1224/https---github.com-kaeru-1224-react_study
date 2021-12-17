@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import useTodoListAtom from "./state";
+import { useDispatch } from "react-redux";
+import { deleteTodo, completeTodo, changeTodo } from "./todoListSlice";
 
 function TodoItem({ id, content, completed }) {
-  const { deleteTodo, completeTodo, changeTodo } = useTodoListAtom();
+  const dispatch = useDispatch();
 
   function handleDelete(e) {
-    deleteTodo(id);
+    dispatch(deleteTodo({ targetId: id }));
   }
   function handleComplete(e) {
-    completeTodo(id);
+    dispatch(completeTodo({ targetId: id }));
   }
 
   const [editing, setEditing] = useState(false);
@@ -29,7 +30,7 @@ function TodoItem({ id, content, completed }) {
 
   function handleKeyUp(e) {
     if (e.key === "Enter") {
-      changeTodo(id, editingInput);
+      dispatch(changeTodo({ targetId: id, newContent: editingInput }));
       setEditing(false);
     }
   }

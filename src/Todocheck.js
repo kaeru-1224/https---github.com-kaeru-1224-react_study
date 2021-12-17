@@ -1,11 +1,11 @@
 import React from "react";
-import useTodoListAtom from "./state";
+import { useDispatch } from "react-redux";
+import { clearCompleted } from "./todoListSlice";
 
 function Todocheck({ count, filter, setFilter }) {
-  const { clearCompleted } = useTodoListAtom();
-
+  const dispatch = useDispatch();
   function handleComplete(e) {
-    clearCompleted();
+    dispatch(clearCompleted());
   }
 
   return (

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import useTodoListAtom from "./state";
+import { useDispatch } from "react-redux";
+import { addTodo } from "./todoListSlice";
 
 function Header() {
-  const { addTodo } = useTodoListAtom();
+  const dispatch = useDispatch();
 
   const [todoInput, setTodoInput] = useState("");
 
@@ -12,7 +13,7 @@ function Header() {
 
   function handleKeyUp(e) {
     if (e.key === "Enter") {
-      addTodo(todoInput);
+      dispatch(addTodo({ id: crypto.randomUUID(), content: todoInput }));
       setTodoInput("");
     }
   }
